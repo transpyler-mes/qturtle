@@ -114,8 +114,8 @@ def _get_cmd(name, ns):
 def qturtle_namespace():
     """Return qturtle namespace as a dictionary"""
 
-    from qturtle.turtlenamespace import TurtleNamespaceEnglish as t_ns
-    ns = {}
+    from qturtle.turtlenamespace import TurtleNamespaceEnglish as turtle_namespace
+    namespace = {}
 
     for _cmd in [
         # Turtle movement
@@ -126,26 +126,29 @@ def qturtle_namespace():
 
         # Simulation control
         'speed', 'restart', 'clear', 'turtlehelp',
+
+        # Turtle extras
+        'print_image'
     ]:
-        ns[_cmd] = _simple_cmd(_cmd, t_ns)
+        namespace[_cmd] = _simple_cmd(_cmd, turtle_namespace)
 
     # Aliases
-    for _alias, _name in t_ns._getaliases().items():
-        ns[_alias] = ns[_name]
+    for _alias, _name in turtle_namespace._getaliases().items():
+        namespace[_alias] = namespace[_name]
 
     # State getters
     for _cmd in ['getpos', 'getheading', 'getwidth', 'getcolor', 'getfill', 'isdown']:
-        ns[_cmd] = _get_cmd(_cmd, t_ns)
+        namespace[_cmd] = _get_cmd(_cmd, turtle_namespace)
 
-    return ns
+    return namespace
 
 
 def pytuga_namespace():
     """Return all drawing related functions from pytuga namespace as a dictionary."""
 
-    from qturtle.turtlenamespace import TurtleNamespace as t_ns
-    ns = {}
-    ns_english = qturtle_namespace()
+    from qturtle.turtlenamespace import TurtleNamespace as turtle_namespace
+    namespace = {}
+    namespace_english = qturtle_namespace()
 
     for _cmd in [
         # Turtle movement
@@ -156,16 +159,19 @@ def pytuga_namespace():
 
         # Simulation control
         'velocidade', 'reiniciar', 'limpar', 'ajuda',
+
+        # Turtle extras
+        'imprimir_imagem'
     ]:
-        ns[_cmd] = _simple_cmd(_cmd, t_ns)
+        namespace[_cmd] = _simple_cmd(_cmd, turtle_namespace)
 
     # Aliases
-    for _alias, _name in t_ns._getaliases().items():
-        ns[_alias] = ns.get(_name) or ns_english[_name]
+    for _alias, _name in turtle_namespace._getaliases().items():
+        namespace[_alias] = namespace.get(_name) or namespace_english[_name]
 
     # State getters
     for _cmd in ['posição', 'direção', 'espessura', 'cor_da_linha', 'cor_do_fundo', 'desenhando']:
-        ns[_cmd] = _get_cmd(_cmd, t_ns)
+        namespace[_cmd] = _get_cmd(_cmd, turtle_namespace)
 
     return ns
 
