@@ -100,9 +100,6 @@ class TranspylerConsoleMixin(ReplElementMixin):
         """
         raise NotImplementedError
 
-    def contextMenuEvent(self, e):
-        pass
-
     def runCode(self, text):
         """
         Run code on terminal.
